@@ -65,17 +65,3 @@ while True:
 #basic information
 botId = 597179716
 chatId = 56350945
-
-
-
-""" 
-switch(variable):
-  'btc':
-    doSomething
-  'value2':
-    dosOmethingElse
-  'valueN':
-    doSomethingDeff
-  default:
-    do something default 
-"""

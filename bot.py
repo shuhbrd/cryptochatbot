@@ -25,20 +25,13 @@ def send_message(chat, text):
   return response
 
 #getting all updates
-def get_bot_updates(limit, offset):
+def get_bot_updates(limit, offset, timeout):
   url = "https://api.telegram.org/bot597179716:AAFxtGS5TlmDk4tF4u_iAcyig9P1lwc_Lac/getUpdates" 
-  params = {'limit': limit, 'offset': offset}
+  params = {'limit': limit, 'offset': offset, 'timeout': timeout}
   result = requests.get(url, params = params)
   decoded = result.json()
   return decoded['result']
 
-def last_update(data):  
-    results = data['result']
-    total_updates = len(results) - 1
-    return results[total_updates]
-
-last_update_id = last_update['update_id']
-offset = last_update_id + 1
 
 #response to user
 def runUserCommand(botUpdates):
@@ -54,14 +47,12 @@ def runUserCommand(botUpdates):
     if textMessage == '/start': 
         send_message(userId,"Welcome to the cryptocurrency bot! Push /start for information, /btc for bitcoin course, /eth for ethereum course.")
 
+limit = 5
+offset = 0
+timeout = 5
 
 #whole bot cycle 
 while True:
-  limit = 5
-  offset = None
-  botUpdates = get_bot_updates(limit, offset)
+  offset = offset + 5
+  botUpdates = get_bot_updates(limit, offset, timeout)
   runUserCommand(botUpdates)
-
-#basic information
-botId = 597179716
-chatId = 56350945

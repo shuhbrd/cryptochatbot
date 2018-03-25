@@ -2,7 +2,8 @@
 import requests
 
 #basic information
-url = "https://api.telegram.org/bot597179716:AAFxtGS5TlmDk4tF4u_iAcyig9P1lwc_Lac/"
+file = open('./boturl.txt')
+url = file.read()
 limit = 5
 offset = 0
 timeout = 2
@@ -41,6 +42,8 @@ def send_message(chat, text):
 
 #response to user
 def run_user_command(bot_updates):
+
+  #getting message text and user id
   for msg in bot_updates:
     if 'message' in msg:
       text_message = msg['message']['text']
@@ -48,6 +51,8 @@ def run_user_command(bot_updates):
     else: 
       text_message = msg['edited_message']['text']
       user_id = msg['edited_message']['from']['id']
+
+    #running user command
     if text_message == '/btc':
       btc_course = 'Bitcoin = ' + str(get_btc()) + ' usd'
       send_message(user_id, btc_course) 

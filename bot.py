@@ -1,7 +1,13 @@
 #requests import
 import requests
 
+#basic information
 url = "https://api.telegram.org/bot597179716:AAFxtGS5TlmDk4tF4u_iAcyig9P1lwc_Lac/"
+limit = 5
+offset = 0
+timeout = 0
+botId = 597179716
+chatId = 56350945
 
 #getting bitcoin course
 def get_btc(): 
@@ -9,7 +15,6 @@ def get_btc():
   result_btc = requests.get(url_btc)
   decoded = result_btc.json()
   return decoded['ticker']['price']
-btc = get_btc()
 
 #getting etherium course
 def get_eth(): 
@@ -17,12 +22,11 @@ def get_eth():
   result_eth = requests.get(url_eth)
   decoded = result_eth.json()
   return decoded['ticker']['price']
-eth = get_eth()
 
 #getting all updates
-def get_bot_updates(limit, offset):
+def get_bot_updates(limit, offset, timeout):
   method = url + "getUpdates" 
-  params = {'limit': limit, 'offset': offset}
+  params = {'limit': limit, 'offset': offset, 'timeout': timeout}
   result = requests.get(method, params = params)
   decoded = result.json()
   return decoded['result']
@@ -48,20 +52,8 @@ def run_user_command(bot_updates):
     if text_message == '/start': 
         send_message(user_id,"Welcome to the cryptocurrency bot! \b \n Push /start for information, /btc for bitcoin course, /eth for ethereum course.")
 
-limit = 100
-offset = 0
-
 #whole bot cycle 
 while True:
-<<<<<<< HEAD
-  for offset in 
-=======
-  for offset in get_bot_updates
->>>>>>> 9a1816ae037ce57ae9d01722248ddb578bff8aeb
-
-  bot_updates = get_bot_updates(limit, offset)
+  bot_updates = get_bot_updates(limit, offset, timeout)
   run_user_command(bot_updates)
-
-#basic information
-botId = 597179716
-chatId = 56350945
+  break

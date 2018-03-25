@@ -5,7 +5,7 @@ import requests
 url = "https://api.telegram.org/bot597179716:AAFxtGS5TlmDk4tF4u_iAcyig9P1lwc_Lac/"
 limit = 5
 offset = 0
-timeout = 0
+timeout = 2
 botId = 597179716
 chatId = 56350945
 
@@ -31,6 +31,7 @@ def get_bot_updates(limit, offset, timeout):
   decoded = result.json()
   return decoded['result']
 
+
 #send message to user
 def send_message(chat, text):
   method = url + "sendMessage" 
@@ -41,19 +42,27 @@ def send_message(chat, text):
 #response to user
 def run_user_command(bot_updates):
   for msg in bot_updates:
-    text_message = msg['message']['text'].lower()
-    user_id = msg['message']['from']['id']
+    if 'message' in msg:
+      text_message = msg['message']['text']
+      user_id = msg['message']['from']['id']
+    else: 
+      text_message = msg['edited_message']['text']
+      user_id = msg['edited_message']['from']['id']
     if text_message == '/btc':
-      btc_course = 'Bitcoin = ' + str(get_btc()) + ' usd' 
+      btc_course = 'Bitcoin = ' + str(get_btc()) + ' usd'
       send_message(user_id, btc_course) 
     if text_message == '/eth':
-        eth_course = 'Ethreum =' + str(get_eth()) + ' usd'
-        send_message(user_id, eth_course)   
+      eth_course = 'Ethreum =' + str(get_eth()) + ' usd'
+      send_message(user_id, eth_course) 
     if text_message == '/start': 
-        send_message(user_id,"Welcome to the cryptocurrency bot! \b \n Push /start for information, /btc for bitcoin course, /eth for ethereum course.")
+      send_message(user_id,"Welcome to the cryptocurrency bot! \n Push /start for information, \n /btc for bitcoin course, \n /eth for ethereum course.")
+  return
+
+
 
 #whole bot cycle 
-while True:
+while True: 
   bot_updates = get_bot_updates(limit, offset, timeout)
-  run_user_command(bot_updates)
-  break
+  if bot_updates: 
+    offset = bot_updates[-1]['update_id'] + 1
+    run_user_command(bot_updates)

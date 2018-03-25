@@ -53,7 +53,11 @@ offset = 0
 
 #whole bot cycle 
 while True:
+<<<<<<< HEAD
   for offset in 
+=======
+  for offset in get_bot_updates
+>>>>>>> 9a1816ae037ce57ae9d01722248ddb578bff8aeb
 
   bot_updates = get_bot_updates(limit, offset)
   run_user_command(bot_updates)

@@ -7,8 +7,6 @@ url = file.read()
 limit = 5
 offset = 0
 timeout = 2
-botId = 597179716
-chatId = 56350945
 
 #getting bitcoin course
 def get_btc(): 
@@ -22,6 +20,12 @@ def get_eth():
   url_eth = "https://api.cryptonator.com/api/ticker/eth-usd" 
   result_eth = requests.get(url_eth)
   decoded = result_eth.json()
+  return decoded['ticker']['price']
+
+def get_ltc(): 
+  url_ltc = "https://api.cryptonator.com/api/ticker/ltc-usd" 
+  result_ltc = requests.get(url_ltc)
+  decoded = result_ltc.json()
   return decoded['ticker']['price']
 
 #getting all updates
@@ -59,8 +63,14 @@ def run_user_command(bot_updates):
     if text_message == '/eth':
       eth_course = 'Ethreum =' + str(get_eth()) + ' usd'
       send_message(user_id, eth_course) 
+    if text_message == '/ltc':
+      ltc_course = 'Litecoin =' + str(get_ltc()) + ' usd'
+      send_message(user_id, ltc_course) 
+    if text_message == '/pew':
+      pew_course = 'There is no need for insults, dear! \n Please invest only such an amount that you can loose!'
+      send_message(user_id, pew_course) 
     if text_message == '/start': 
-      send_message(user_id,"Welcome to the cryptocurrency bot! \n Push /start for information, \n /btc for bitcoin course, \n /eth for ethereum course.")
+      send_message(user_id,"Welcome to the cryptocurrency bot! \n Push /start for information, \n /btc for Bitcoin course, \n /eth for Ethereum course, \n /ltc for Litecoin course.")
   return
 
 

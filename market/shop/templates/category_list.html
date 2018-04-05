@@ -1,0 +1,8 @@
+{% for category in categories %}
+    <h2>{{category.title}}</h2>
+    <p>{{category.description}}</p>
+{% endfor %}
+
+{% for category in categories.all %}
+    {category.id}
+{% endfor %}

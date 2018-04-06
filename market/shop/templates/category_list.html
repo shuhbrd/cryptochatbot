@@ -3,6 +3,6 @@
     <p>{{category.description}}</p>
 {% endfor %}
 
-{% for category in categories.all %}
+{% for category in category.product.all %}
     {category.id}
 {% endfor %}

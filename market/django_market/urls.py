@@ -21,7 +21,6 @@ from shop import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.CategoryListView.as_view(), name = 'index'),
-    path('', views.ProductListView.as_view(), name = 'products'),
     path('categories/<int:pk/>', views.CategoryDetail.as_view(), name = 'categories'),
     path('categories/products/', views.ProductListView.as_view(), name = 'product_list'),
     path('categories/products/<int:pk>/', views.ProductDetail.as_view(), name = 'product detail'),

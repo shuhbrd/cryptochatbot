@@ -8,28 +8,36 @@ limit = 5
 offset = 0
 timeout = 2
 
-#getting bitcoin course
-def get_btc(): 
-  url_btc = "https://api.cryptonator.com/api/ticker/btc-usd" 
-  result_btc = requests.get(url_btc)
-  decoded = result_btc.json()
-  return decoded['ticker']['price']
+#putting functions together in one class
+class CurrencyHandler: 
+  def __init__(self, token):
+    self.token = token 
+    self.api_url = "https://api.cryptonator.com/api/ticker/"
 
-#getting etherium course
-def get_eth(): 
-  url_eth = "https://api.cryptonator.com/api/ticker/eth-usd" 
-  result_eth = requests.get(url_eth)
-  decoded = result_eth.json()
-  return decoded['ticker']['price']
+  #getting bitcoin course
+  def get_btc(self): 
+    method = "btc-usd"
+    self.api_url = "https://api.cryptonator.com/api/ticker/" + method
+    result_btc = requests.get(self.api_url)
+    decoded = result_btc.json()
+    return decoded['ticker']['price']
 
-def get_ltc(): 
-  url_ltc = "https://api.cryptonator.com/api/ticker/ltc-usd" 
-  result_ltc = requests.get(url_ltc)
-  decoded = result_ltc.json()
-  return decoded['ticker']['price']
+  #getting etherium course
+  def get_eth(self): 
+    method = "eth-usd"
+    self.api_url = "https://api.cryptonator.com/api/ticker/" + method
+    result_eth = requests.get(self.api_url)
+    decoded = result_eth.json()
+    return decoded['ticker']['price']
+
+  def get_ltc(self): 
+    url_ltc = "https://api.cryptonator.com/api/ticker/ltc-usd" 
+    result_ltc = requests.get(url_ltc)
+    decoded = result_ltc.json()
+    return decoded['ticker']['price']
 
 #getting all updates
-def get_bot_updates(limit, offset, timeout):
+def get_bot_updates(self, limit, offset, timeout):
   method = url + "getUpdates" 
   params = {'limit': limit, 'offset': offset, 'timeout': timeout}
   result = requests.get(method, params = params)
@@ -38,14 +46,14 @@ def get_bot_updates(limit, offset, timeout):
 
 
 #send message to user
-def send_message(chat, text):
+def send_message(self, chat, text):
   method = url + "sendMessage" 
   params = {'chat_id': chat, 'text': text}
   response = requests.post(method, params = params)
   return response
 
 #response to user
-def run_user_command(bot_updates):
+def run_user_command(self, bot_updates):
 
   #getting message text and user id
   for msg in bot_updates:

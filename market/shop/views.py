@@ -29,11 +29,11 @@ class CategoryListView(generic.ListView):
     template_name = 'category_list.html'
     context_object_name = 'categories'
     model = Category
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
-        return context
+        return context 
 
 class CategoryDetail(generic.DetailView):
     template_name = 'category_detail.html'

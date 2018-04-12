@@ -1,0 +1,9 @@
+
+{% for category in categories %}
+    <a href="{% url 'category_detail' category.id %}"><h2>{{category.title}}</h2></a>
+{% endfor %}
+
+{% for product in products %}
+<a href= "{% url 'product_detail' product.id %}"><h2>{{product.title}}</h2></a>
+    <p>{{product.description}}</p>
+{% endfor %}
